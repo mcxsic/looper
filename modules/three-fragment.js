@@ -6,7 +6,7 @@ const PLANE_HEIGHT = 10;
 
 const WIDTH = 400;
 const HEIGHT = 400;
-const PIXEL_RATIO = 2;
+const PIXEL_RATIO = 1.5;
 
 function getWebGLRenderer() {
     const renderer = new THREE.WebGLRenderer({ antialias: true });
