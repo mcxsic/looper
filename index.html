@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Looper</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
@@ -8,81 +9,86 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css" media="screen" />
     <link href="https://fonts.googleapis.com/css?family=Krona+One|Open+Sans" rel="stylesheet">
 
-  </head>
-  <body>
+</head>
+
+<body>
     <header>
-      <h1>Looper</h1>
-      <h2>A tool to create looperinos · <a href="https://github.com/spite/looper" >GitHub</a> | <b>Chrome and Safari Tech Preview only</b></h2>
-      <div class="recordPanel">
-        <a href="#" class="btn orange" id="start">Record</a>
-      </div>
+        <h1>Looper</h1>
+        <h2>A tool to create looperinos ·
+            <a href="https://github.com/spite/looper">GitHub</a> |
+            <b>Chrome and Safari Tech Preview only</b>
+        </h2>
+        <div class="recordPanel">
+            <a href="#" class="btn orange" id="start">Record</a>
+        </div>
     </header>
 
-<script src="js/CCapture.all.min.js"></script>
+    <script src="js/CCapture.all.min.js"></script>
 
-<script>
+    <script>
 
-'use strict';
+        'use strict';
 
-async function loadModule() {
-  const num = window.location.hash.substr(1) || 1;
-  const module = await import(`./loops/${num}.js`);
-  document.body.appendChild(module.canvas);
-  return module;
-}
+        async function loadModule() {
+            const num = window.location.hash.substr(1) || 1;
+            const module = await import(`./loops/${num}.js`);
+            document.body.appendChild(module.canvas);
+            return module;
+        }
 
-async function init() {
-  let module = await loadModule();
+        async function init() {
+            let module = await loadModule();
 
-  async function reload() {
-    if (module && module.canvas) {
-      document.body.removeChild(module.canvas);
-    }
-    module = await loadModule();
-  }
+            async function reload() {
+                if (module && module.canvas) {
+                    document.body.removeChild(module.canvas);
+                }
+                module = await loadModule();
+            }
 
-  const capturer = new CCapture( {
-    verbose: false,
-    display: true,
-    framerate: 60,
-    motionBlurFrames: ( 960 / 60 ),
-    quality: 99,
-    format: 'gif',
-    timeLimit: module.loopDuration,
-    frameLimit: 0,
-    autoSaveTime: 0,
-    workersPath: 'js/'
-  } );
+            const capturer = new CCapture({
+                verbose: false,
+                display: true,
+                framerate: 60,
+                motionBlurFrames: (960 / 60),
+                quality: 99,
+                format: 'gif',
+                timeLimit: module.loopDuration,
+                frameLimit: 0,
+                autoSaveTime: 0,
+                workersPath: 'js/'
+            });
 
-  let startTime = 0;
-  function capture() {
-    capturer.start();
-    startTime = performance.now();
-  }
+            let startTime = 0;
+            function capture() {
+                capturer.start();
+                startTime = performance.now();
+            }
 
-  document.getElementById('start').addEventListener('click', e => {
-    capture();
-    e.preventDefault();
-  });
+            document.getElementById('start').addEventListener('click', e => {
+                capture();
+                e.preventDefault();
+            });
 
-  function update() {
-    requestAnimationFrame(update);
-    if (!skip) module.draw(startTime);
-    capturer.capture(module.canvas);
-  }
+            function update() {
+                requestAnimationFrame(update);
+                if (!skip) module.draw(startTime);
+                capturer.capture(module.canvas);
+            }
 
-  update();
+            update();
 
-  window.addEventListener('hashchange', async e => {
-    reload();
-  })
-}
+            window.addEventListener('hashchange', async e => {
+                reload();
+            })
+        }
 
-window.skip = false;
+        window.skip = false;
 
-window.addEventListener('load', init);
+        window.addEventListener('load', init);
 
-</script>
+    </script>
 
-  </body>
+</body>
+
 </html>
