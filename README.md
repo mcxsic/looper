@@ -1,7 +1,7 @@
 # looper
 Looperepool, a tool to create looperinos
 
-Demo: https://spite.github.io/looper/#4 (Chrome and Safari Tech Preview only)
+Demo: https://mcxsic.github.io/looper/#circumferences (Chrome and Safari Tech Preview only)
 
 Steps:
 
@@ -12,8 +12,5 @@ Steps:
   - a ```draw``` method, that can take an optional argument timeStart, in case you want to reset the animation when capture starts
   - ```loopDuration```, the duration of the loop in seconds. This will tell the capturer how many frames to get
   - ```canvas```, the HTMLCanvasElement to use for display and capture.
-
-  - 1.js is an example of 2D Canvas
-  - 4.js is an example of three.js
 
 - Open localhost:8000#foo
